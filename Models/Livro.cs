@@ -1,4 +1,4 @@
-public class BookModel
+public class Livro
 {
   public int Id { get; set; }
   public int IdCategoria { get; set; }

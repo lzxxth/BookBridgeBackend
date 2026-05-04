@@ -7,5 +7,6 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<BookModel> Books { get; set; }
+    public DbSet<Livro> Livros { get; set; }
+    public DbSet<Autor> Autores { get; set; }
 }
