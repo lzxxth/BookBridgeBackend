@@ -1,0 +1,6 @@
+@BookBridgeBackend_HostAddress = http://localhost:5148
+
+GET {{BookBridgeBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
