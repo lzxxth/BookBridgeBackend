@@ -35,10 +35,7 @@ C:\Users\luis\Projects\BookBridgeBackend\obj\Debug\net10.0\BookBridgeBackend.pdb
 C:\Users\luis\Projects\BookBridgeBackend\obj\Debug\net10.0\BookBridgeBackend.genruntimeconfig.cache
 C:\Users\luis\Projects\BookBridgeBackend\obj\Debug\net10.0\ref\BookBridgeBackend.dll
 C:\Users\luis\Projects\BookBridgeBackend\obj\Debug\net10.0\BookBridgeBackend.sourcelink.json
-C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Azure.Core.dll
-C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Azure.Identity.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Humanizer.dll
-C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -51,8 +48,6 @@ C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.EntityFrame
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
-C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.Identity.Client.dll
-C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.Identity.Client.Extensions.Msal.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
@@ -61,7 +56,6 @@ C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.IdentityMod
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.SqlServer.Server.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Mono.TextTemplating.dll
-C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.ClientModel.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.CodeDom.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.Composition.AttributedModel.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.Composition.Convention.dll
@@ -70,7 +64,6 @@ C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.Composition.Ru
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.Composition.TypedParts.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.Configuration.ConfigurationManager.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.Memory.Data.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.resources.dll
@@ -160,3 +153,5 @@ C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\ru\Microsoft.CodeAnal
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.Data.SqlClient.Extensions.Abstractions.dll
+C:\Users\luis\Projects\BookBridgeBackend\bin\Debug\net10.0\Microsoft.Data.SqlClient.Internal.Logging.dll
