@@ -1,83 +1,83 @@
 using Microsoft.Data.SqlClient;
 
-public class CategoriaRepository : ICategoriaRepository
+public class TipoTransacaoRepository : ITipoTransacaoRepository
 {
     private readonly string _connectionString;
 
-    public CategoriaRepository(IConfiguration config)
+    public TipoTransacaoRepository(IConfiguration config)
     {
         _connectionString = config.GetConnectionString("DefaultConnection")
           ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     }
 
-    public async Task<List<object>> GetCategorias()
+    public async Task<List<object>> GetTipoTransacoes()
     {
         var results = new List<object>();
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var query = @"SELECT * FROM BookBridge.dbo.Categoria";
+        var query = @"SELECT * FROM BookBridge.dbo.TipoTransacao";
         using var command = new SqlCommand(query, connection);
         using var reader = await command.ExecuteReaderAsync();
         while (await reader.ReadAsync())
         {
             results.Add(new
             {
-                idCategoria = reader.GetInt32(0),
-                nome        = reader.GetString(1)
+                idTipoTransacao = reader.GetInt32(0),
+                descricao       = reader.GetString(1)
             });
         }
         return results;
     }
 
-    public async Task<object?> GetCategoriaById(int idCategoria)
+    public async Task<object?> GetTipoTransacaoById(int idTipoTransacao)
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var query = @"SELECT * FROM BookBridge.dbo.Categoria WHERE idCategoria = @idCategoria";
+        var query = @"SELECT * FROM BookBridge.dbo.TipoTransacao WHERE idTipoTransacao = @idTipoTransacao";
         using var command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@idCategoria", idCategoria);
+        command.Parameters.AddWithValue("@idTipoTransacao", idTipoTransacao);
         using var reader = await command.ExecuteReaderAsync();
         if (await reader.ReadAsync())
         {
             return new
             {
-                idCategoria = reader.GetInt32(0),
-                nome        = reader.GetString(1)
+                idTipoTransacao = reader.GetInt32(0),
+                descricao       = reader.GetString(1)
             };
         }
         return null;
     }
 
-    public async Task InsertCategoria(string nome)
+    public async Task InsertTipoTransacao(string descricao)
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var query = @"INSERT INTO BookBridge.dbo.Categoria (nome) VALUES (@nome)";
+        var query = @"INSERT INTO BookBridge.dbo.TipoTransacao (descricao) VALUES (@descricao)";
         using var command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@nome", nome);
+        command.Parameters.AddWithValue("@descricao", descricao);
         await command.ExecuteNonQueryAsync();
     }
 
-    public async Task UpdateCategoria(int idCategoria, string nome)
+    public async Task UpdateTipoTransacao(int idTipoTransacao, string descricao)
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var query = @"UPDATE BookBridge.dbo.Categoria
-                      SET nome = @nome
-                      WHERE idCategoria = @idCategoria";
+        var query = @"UPDATE BookBridge.dbo.TipoTransacao
+                      SET descricao = @descricao
+                      WHERE idTipoTransacao = @idTipoTransacao";
         using var command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@idCategoria", idCategoria);
-        command.Parameters.AddWithValue("@nome",        nome);
+        command.Parameters.AddWithValue("@idTipoTransacao", idTipoTransacao);
+        command.Parameters.AddWithValue("@descricao",       descricao);
         await command.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteCategoria(int idCategoria)
+    public async Task DeleteTipoTransacao(int idTipoTransacao)
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var query = @"DELETE FROM BookBridge.dbo.Categoria WHERE idCategoria = @idCategoria";
+        var query = @"DELETE FROM BookBridge.dbo.TipoTransacao WHERE idTipoTransacao = @idTipoTransacao";
         using var command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@idCategoria", idCategoria);
+        command.Parameters.AddWithValue("@idTipoTransacao", idTipoTransacao);
         await command.ExecuteNonQueryAsync();
     }
 }

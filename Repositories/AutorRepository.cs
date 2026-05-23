@@ -5,7 +5,8 @@ public class AutorRepository : IAutorRepository
   private readonly string _connectionString;
 
   public AutorRepository(IConfiguration config) {
-    _connectionString = config.GetConnectionString("DefaultConnection");
+    _connectionString = config.GetConnectionString("DefaultConnection")
+        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
   }
 
   public async Task<List<object>> GetAutores() {

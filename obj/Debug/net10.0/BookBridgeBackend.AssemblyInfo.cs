@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BookBridgeBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f9845b233e9e30ac99fc5e9af150baa81da2016")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf0149788d22779230c77a74e1ceb65bc972b451")]
 [assembly: System.Reflection.AssemblyProductAttribute("BookBridgeBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BookBridgeBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
