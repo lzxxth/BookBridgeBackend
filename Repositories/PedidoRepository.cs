@@ -7,31 +7,34 @@ public class PedidoRepository : IPedidoRepository
     public PedidoRepository(IConfiguration config)
     {
         _connectionString = config.GetConnectionString("DefaultConnection")
-          ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     }
-
-    private static object DateOnlyToParam(DateOnly? d) =>
-        d.HasValue ? (object)d.Value.ToDateTime(TimeOnly.MinValue) : DBNull.Value;
 
     public async Task<List<object>> GetPedidos()
     {
         var results = new List<object>();
+
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
+
         var query = @"SELECT * FROM BookBridge.dbo.Pedido";
+
         using var command = new SqlCommand(query, connection);
         using var reader = await command.ExecuteReaderAsync();
+
         while (await reader.ReadAsync())
         {
             results.Add(new
             {
-                idPedido        = reader.GetInt32(0),
-                idHistorico     = reader.GetInt32(1),
-                dataInicio      = reader.IsDBNull(2) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(2)),
-                dataFimPrevista = reader.IsDBNull(3) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(3)),
-                dataFimEfetiva  = reader.IsDBNull(4) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(4))
+                idPedido = reader.GetInt32(0),
+                idUser = reader.GetInt32(1),
+                idLivro = reader.GetInt32(2),
+                descricao = reader.IsDBNull(3) ? null : reader.GetString(3),
+                estado = reader.GetString(4),
+                dataRegisto = reader.GetDateTime(5)
             });
         }
+
         return results;
     }
 
@@ -39,57 +42,71 @@ public class PedidoRepository : IPedidoRepository
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var query = @"SELECT * FROM BookBridge.dbo.Pedido WHERE idPedido = @idPedido";
+
+        var query = @"SELECT * 
+                      FROM BookBridge.dbo.Pedido 
+                      WHERE idPedido = @idPedido";
+
         using var command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@idPedido", idPedido);
+
         using var reader = await command.ExecuteReaderAsync();
-        if (await reader.ReadAsync())
+
+        while (await reader.ReadAsync())
         {
             return new
             {
-                idPedido        = reader.GetInt32(0),
-                idHistorico     = reader.GetInt32(1),
-                dataInicio      = reader.IsDBNull(2) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(2)),
-                dataFimPrevista = reader.IsDBNull(3) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(3)),
-                dataFimEfetiva  = reader.IsDBNull(4) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(4))
+                idPedido = reader.GetInt32(0),
+                idUser = reader.GetInt32(1),
+                idLivro = reader.GetInt32(2),
+                descricao = reader.IsDBNull(3) ? null : reader.GetString(3),
+                estado = reader.GetString(4),
+                dataRegisto = reader.GetDateTime(5)
             };
         }
+
         return null;
     }
 
-    // dataInicio e dataFimPrevista são opcionais no INSERT
-    // a BD valida: dataFimPrevista >= dataInicio (CHECK constraint)
-    public async Task InsertPedido(int idHistorico, DateOnly? dataInicio, DateOnly? dataFimPrevista)
+    public async Task InsertPedido(int idUser, int idLivro, string? descricao)
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
+
         var query = @"INSERT INTO BookBridge.dbo.Pedido
-                          (idHistorico, dataInicio, dataFimPrevista)
+                      (idUser, idLivro, descricao)
                       VALUES
-                          (@idHistorico, @dataInicio, @dataFimPrevista)";
+                      (@idUser, @idLivro, @descricao)";
+
         using var command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@idHistorico",     idHistorico);
-        command.Parameters.AddWithValue("@dataInicio",      DateOnlyToParam(dataInicio));
-        command.Parameters.AddWithValue("@dataFimPrevista", DateOnlyToParam(dataFimPrevista));
+
+        command.Parameters.AddWithValue("@idUser", idUser);
+        command.Parameters.AddWithValue("@idLivro", idLivro);
+        command.Parameters.AddWithValue("@descricao", (object?)descricao ?? DBNull.Value);
+
         await command.ExecuteNonQueryAsync();
     }
 
-    public async Task UpdatePedido(int idPedido, int idHistorico, DateOnly? dataInicio, DateOnly? dataFimPrevista, DateOnly? dataFimEfetiva)
+    public async Task UpdatePedido(int idPedido, int idUser, int idLivro, string? descricao, string estado)
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
+
         var query = @"UPDATE BookBridge.dbo.Pedido
-                      SET idHistorico     = @idHistorico,
-                          dataInicio      = @dataInicio,
-                          dataFimPrevista = @dataFimPrevista,
-                          dataFimEfetiva  = @dataFimEfetiva
+                      SET idUser = @idUser,
+                          idLivro = @idLivro,
+                          descricao = @descricao,
+                          estado = @estado
                       WHERE idPedido = @idPedido";
+
         using var command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@idPedido",        idPedido);
-        command.Parameters.AddWithValue("@idHistorico",     idHistorico);
-        command.Parameters.AddWithValue("@dataInicio",      DateOnlyToParam(dataInicio));
-        command.Parameters.AddWithValue("@dataFimPrevista", DateOnlyToParam(dataFimPrevista));
-        command.Parameters.AddWithValue("@dataFimEfetiva",  DateOnlyToParam(dataFimEfetiva));
+
+        command.Parameters.AddWithValue("@idPedido", idPedido);
+        command.Parameters.AddWithValue("@idUser", idUser);
+        command.Parameters.AddWithValue("@idLivro", idLivro);
+        command.Parameters.AddWithValue("@descricao", (object?)descricao ?? DBNull.Value);
+        command.Parameters.AddWithValue("@estado", estado);
+
         await command.ExecuteNonQueryAsync();
     }
 
@@ -97,9 +114,13 @@ public class PedidoRepository : IPedidoRepository
     {
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var query = @"DELETE FROM BookBridge.dbo.Pedido WHERE idPedido = @idPedido";
+
+        var query = @"DELETE FROM BookBridge.dbo.Pedido 
+                      WHERE idPedido = @idPedido";
+
         using var command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@idPedido", idPedido);
+
         await command.ExecuteNonQueryAsync();
     }
 }

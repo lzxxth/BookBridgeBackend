@@ -22,32 +22,28 @@ public class PedidoController : ControllerBase
     public async Task<IActionResult> GetPedidoById(int idPedido)
     {
         var pedido = await _pedidoRepository.GetPedidoById(idPedido);
-        if (pedido is null)
-            return NotFound("Pedido não encontrado");
         return Ok(pedido);
     }
 
-    // datas opcionais, formato: yyyy-MM-dd
-    // BD valida: dataFimPrevista >= dataInicio
     [HttpPost]
     public async Task<IActionResult> InsertPedido(
-        [FromQuery] int       idHistorico,
-        [FromQuery] DateOnly? dataInicio      = null,
-        [FromQuery] DateOnly? dataFimPrevista = null)
+        [FromQuery] int idUser,
+        [FromQuery] int idLivro,
+        [FromQuery] string? descricao)
     {
-        await _pedidoRepository.InsertPedido(idHistorico, dataInicio, dataFimPrevista);
+        await _pedidoRepository.InsertPedido(idUser, idLivro, descricao);
         return Ok("Pedido criado");
     }
 
     [HttpPut("{idPedido}")]
     public async Task<IActionResult> UpdatePedido(
         int idPedido,
-        [FromQuery] int       idHistorico,
-        [FromQuery] DateOnly? dataInicio      = null,
-        [FromQuery] DateOnly? dataFimPrevista = null,
-        [FromQuery] DateOnly? dataFimEfetiva  = null)
+        [FromQuery] int idUser,
+        [FromQuery] int idLivro,
+        [FromQuery] string? descricao,
+        [FromQuery] string estado)
     {
-        await _pedidoRepository.UpdatePedido(idPedido, idHistorico, dataInicio, dataFimPrevista, dataFimEfetiva);
+        await _pedidoRepository.UpdatePedido(idPedido, idUser, idLivro, descricao, estado);
         return Ok("Pedido atualizado");
     }
 

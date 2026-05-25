@@ -22,30 +22,42 @@ public class MensagemController : ControllerBase
     public async Task<IActionResult> GetMensagemById(int idMensagem)
     {
         var mensagem = await _mensagemRepository.GetMensagemById(idMensagem);
-        if (mensagem is null)
-            return NotFound("Mensagem não encontrada");
         return Ok(mensagem);
     }
 
-    // idHistorico é opcional (pode ser uma mensagem fora de qualquer transação)
     [HttpPost]
     public async Task<IActionResult> InsertMensagem(
-        [FromQuery] int     idRemetente,
-        [FromQuery] int     idDestinatario,
-        [FromQuery] string  conteudo,
-        [FromQuery] int?    idHistorico = null)
+        [FromQuery] int idRemetente,
+        [FromQuery] int idDestinatario,
+        [FromQuery] int? idAnuncio,
+        [FromQuery] string conteudo)
     {
-        await _mensagemRepository.InsertMensagem(idRemetente, idDestinatario, idHistorico, conteudo);
-        return Ok("Mensagem enviada");
+        await _mensagemRepository.InsertMensagem(
+            idRemetente,
+            idDestinatario,
+            idAnuncio,
+            conteudo);
+
+        return Ok("Mensagem criada");
     }
 
-    // PUT apenas marca a mensagem como lida ou não lida
     [HttpPut("{idMensagem}")]
     public async Task<IActionResult> UpdateMensagem(
         int idMensagem,
+        [FromQuery] int idRemetente,
+        [FromQuery] int idDestinatario,
+        [FromQuery] int? idAnuncio,
+        [FromQuery] string conteudo,
         [FromQuery] bool lida)
     {
-        await _mensagemRepository.UpdateMensagem(idMensagem, lida);
+        await _mensagemRepository.UpdateMensagem(
+            idMensagem,
+            idRemetente,
+            idDestinatario,
+            idAnuncio,
+            conteudo,
+            lida);
+
         return Ok("Mensagem atualizada");
     }
 

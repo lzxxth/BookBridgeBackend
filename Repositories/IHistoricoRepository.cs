@@ -1,8 +1,21 @@
 public interface IHistoricoRepository
 {
     Task<List<object>> GetHistoricos();
+
     Task<object?> GetHistoricoById(int idHistorico);
-    Task InsertHistorico(int idTipoTransacao, int idUserSolicitante, int idUserProprietario, int idExemplar, string estado, string? observacoes);
-    Task UpdateHistorico(int idHistorico, int idTipoTransacao, int idUserSolicitante, int idUserProprietario, int idExemplar, string estado, DateOnly? dataConclusao, string? observacoes);
+
+    Task InsertHistorico(
+        int idTransacao,
+        int idUser,
+        string? descricao);
+
+    Task UpdateHistorico(
+        int idHistorico,
+        int idTransacao,
+        int idUser,
+        string? descricao);
+
     Task DeleteHistorico(int idHistorico);
+
+    Task<List<object>> GetHistoricoDetalhado();
 }

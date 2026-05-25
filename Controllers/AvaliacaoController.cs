@@ -22,41 +22,65 @@ public class AvaliacaoController : ControllerBase
     public async Task<IActionResult> GetAvaliacaoById(int idAvaliacao)
     {
         var avaliacao = await _avaliacaoRepository.GetAvaliacaoById(idAvaliacao);
-        if (avaliacao is null)
-            return NotFound("Avaliação não encontrada");
         return Ok(avaliacao);
     }
 
-    // rating aceita: 1 a 5
-    // comentario é opcional
-    // cada avaliador só pode avaliar uma vez por histórico (garantido pela BD)
     [HttpPost]
     public async Task<IActionResult> InsertAvaliacao(
-        [FromQuery] int     idUserAvaliado,
-        [FromQuery] int     idUserAvaliador,
-        [FromQuery] int     idHistorico,
-        [FromQuery] int     rating,
-        [FromQuery] string? comentario = null)
+        [FromQuery] int idUserAvaliado,
+        [FromQuery] int idUserAvaliador,
+        [FromQuery] int idTransacao,
+        [FromQuery] int rating,
+        [FromQuery] string? comentario)
     {
-        await _avaliacaoRepository.InsertAvaliacao(idUserAvaliado, idUserAvaliador, idHistorico, rating, comentario);
-        return Ok("Avaliação criada");
+        await _avaliacaoRepository.InsertAvaliacao(
+            idUserAvaliado,
+            idUserAvaliador,
+            idTransacao,
+            rating,
+            comentario);
+
+        return Ok("Avaliacao criada");
     }
 
-    // PUT apenas permite editar rating e comentario
     [HttpPut("{idAvaliacao}")]
     public async Task<IActionResult> UpdateAvaliacao(
         int idAvaliacao,
-        [FromQuery] int     rating,
-        [FromQuery] string? comentario = null)
+        [FromQuery] int idUserAvaliado,
+        [FromQuery] int idUserAvaliador,
+        [FromQuery] int idTransacao,
+        [FromQuery] int rating,
+        [FromQuery] string? comentario)
     {
-        await _avaliacaoRepository.UpdateAvaliacao(idAvaliacao, rating, comentario);
-        return Ok("Avaliação atualizada");
+        await _avaliacaoRepository.UpdateAvaliacao(
+            idAvaliacao,
+            idUserAvaliado,
+            idUserAvaliador,
+            idTransacao,
+            rating,
+            comentario);
+
+        return Ok("Avaliacao atualizada");
     }
 
     [HttpDelete("{idAvaliacao}")]
     public async Task<IActionResult> DeleteAvaliacao(int idAvaliacao)
     {
         await _avaliacaoRepository.DeleteAvaliacao(idAvaliacao);
-        return Ok("Avaliação apagada");
+        return Ok("Avaliacao apagada");
+    }
+
+    [HttpGet("media/{idUser}")]
+    public async Task<IActionResult> GetMediaAvaliacao(int idUser)
+    {
+        var media = await _avaliacaoRepository.GetMediaAvaliacao(idUser);
+        return Ok(media);
+    }
+
+    [HttpGet("detalhadas")]
+    public async Task<IActionResult> GetAvaliacoesDetalhadas()
+    {
+        var result = await _avaliacaoRepository.GetAvaliacoesDetalhadas();
+        return Ok(result);
     }
 }
